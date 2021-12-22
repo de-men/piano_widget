@@ -2,11 +2,10 @@ import 'package:flutter/widgets.dart';
 
 import 'key_widget.dart';
 
-const divider = 0.5;
-
 class OctaveWidget extends StatelessWidget {
   final double whiteKeyWidth;
   final double height;
+  final double divider;
   final List<MapEntry<String, int>> pitches;
 
   const OctaveWidget({
@@ -14,6 +13,7 @@ class OctaveWidget extends StatelessWidget {
     required this.whiteKeyWidth,
     required this.height,
     required this.pitches,
+    required this.divider,
   }) : super(key: key);
 
   @override
