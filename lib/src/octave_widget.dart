@@ -36,7 +36,7 @@ class OctaveWidget extends StatelessWidget {
                     index * (whiteKeyWidth + divider),
                     0,
                     whiteKeyWidth,
-                    56,
+                    height,
                   ),
                   child: KeyWidget(
                     width: whiteKeyWidth,
