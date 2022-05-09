@@ -1,3 +1,7 @@
+## 1.3.0
+
+* Support custom key widget
+
 ## 1.2.0
 
 * Support set divider

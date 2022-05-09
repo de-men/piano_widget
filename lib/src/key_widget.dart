@@ -27,3 +27,9 @@ class KeyWidget extends StatelessWidget {
     );
   }
 }
+
+typedef KeyBuilder = Widget Function(
+  double width,
+  double height,
+  MapEntry<String, int> pitch,
+);

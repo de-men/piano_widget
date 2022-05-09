@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:piano_widget/src/key_widget.dart';
 
 import 'octave_widget.dart';
 
@@ -31,114 +32,170 @@ class PianoWidget extends StatelessWidget {
   final double divider;
   final List<Iterable<MapEntry<String, int>>> octaves;
   final int whiteCount;
+  final KeyBuilder keyBuilder;
 
   /// The layout with 32 keys and start with C
-  factory PianoWidget.keys32c({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys32c({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 32,
       startWith: 'C',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 32 keys and start with F
-  factory PianoWidget.keys32f({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys32f({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 32,
       startWith: 'F',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 36 keys and start with C
-  factory PianoWidget.keys36c({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys36c({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 36,
       startWith: 'C',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 36 keys and start with F
-  factory PianoWidget.keys36f({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys36f({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 36,
       startWith: 'F',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 37 keys and start with C
-  factory PianoWidget.keys37c({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys37c({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 37,
       startWith: 'C',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 37 keys and start with F
-  factory PianoWidget.keys37f({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys37f({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 37,
       startWith: 'F',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 49 keys
-  factory PianoWidget.keys49({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys49({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 49,
       startWith: 'C',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 54 keys
-  factory PianoWidget.keys54({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys54({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 54,
       startWith: 'C',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 61 keys
-  factory PianoWidget.keys61({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys61({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 61,
       startWith: 'C',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 76 keys
-  factory PianoWidget.keys76({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys76({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 76,
       startWith: 'E',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
   /// The layout with 88 keys
-  factory PianoWidget.keys88({double height = 56, double divider = 0.5}) {
+  factory PianoWidget.keys88({
+    double height = 56,
+    double divider = 0.5,
+    keyBuilder = buildKey,
+  }) {
     return PianoWidget.custom(
       keys: 88,
       startWith: 'A',
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
@@ -147,6 +204,7 @@ class PianoWidget extends StatelessWidget {
     required String startWith,
     double height = 56,
     divider = 0.5,
+    keyBuilder = buildKey,
   }) {
     final startIndex = octave.indexOf(startWith);
     final firstOctave = startIndex == 0 ? 0 : 12 - startIndex;
@@ -182,6 +240,7 @@ class PianoWidget extends StatelessWidget {
       whiteCount: whiteCount,
       height: height,
       divider: divider,
+      keyBuilder: keyBuilder,
     );
   }
 
@@ -191,6 +250,7 @@ class PianoWidget extends StatelessWidget {
     required this.whiteCount,
     required this.height,
     required this.divider,
+    this.keyBuilder = buildKey,
   }) : super(key: key);
 
   @override
@@ -210,6 +270,7 @@ class PianoWidget extends StatelessWidget {
                       height: height,
                       divider: divider,
                       pitches: element.toList(),
+                      keyBuilder: keyBuilder,
                     ),
                     if (index < octaves.length - 1) SizedBox(width: divider),
                   ]))

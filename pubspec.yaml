@@ -1,6 +1,6 @@
 name: piano_widget
 description: A new Flutter package provide a widget that show piano keyboards layout.
-version: 1.2.0
+version: 1.3.0
 homepage: https://github.com/de-men/piano_widget
 
 environment:

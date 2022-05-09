@@ -55,7 +55,7 @@ class MyHomePage extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           children: [
             const Text('32 Keys start with C'),
-            PianoWidget.keys32c(),
+            PianoWidget.keys32c(keyBuilder: buildKey),
             const Divider(),
             const Text('32 Keys start with F'),
             PianoWidget.keys32f(),
@@ -87,6 +87,64 @@ class MyHomePage extends StatelessWidget {
             const Text('88 Keys'),
             PianoWidget.keys88(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildKey(double width, double height, MapEntry<String, int> pitch) {
+    return MyKeyWidget(width: width, height: height, pitch: pitch);
+  }
+}
+
+class MyKeyWidget extends StatefulWidget {
+  final double width;
+  final double height;
+  final MapEntry<String, int> pitch;
+
+  const MyKeyWidget({
+    required this.width,
+    required this.height,
+    required this.pitch,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<MyKeyWidget> createState() => _MyKeyWidgetState();
+}
+
+class _MyKeyWidgetState extends State<MyKeyWidget> {
+  bool isPressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() {
+          isPressed = true;
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          isPressed = false;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          isPressed = false;
+        });
+      },
+      child: Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: BoxDecoration(
+          color: isPressed
+              ? Colors.red
+              : (widget.pitch.key.contains('#') ? Colors.black : Colors.white),
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(2),
+            bottomRight: Radius.circular(2),
+          ),
         ),
       ),
     );

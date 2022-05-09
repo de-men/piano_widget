@@ -2,11 +2,16 @@ import 'package:flutter/widgets.dart';
 
 import 'key_widget.dart';
 
+Widget buildKey(double width, double height, MapEntry<String, int> pitch) {
+  return KeyWidget(width: width, height: height, pitch: pitch);
+}
+
 class OctaveWidget extends StatelessWidget {
   final double whiteKeyWidth;
   final double height;
   final double divider;
   final List<MapEntry<String, int>> pitches;
+  final KeyBuilder keyBuilder;
 
   const OctaveWidget({
     Key? key,
@@ -14,6 +19,7 @@ class OctaveWidget extends StatelessWidget {
     required this.height,
     required this.pitches,
     required this.divider,
+    this.keyBuilder = buildKey,
   }) : super(key: key);
 
   @override
@@ -38,11 +44,7 @@ class OctaveWidget extends StatelessWidget {
                     whiteKeyWidth,
                     height,
                   ),
-                  child: KeyWidget(
-                    width: whiteKeyWidth,
-                    height: height,
-                    pitch: whites[index],
-                  ),
+                  child: keyBuilder(whiteKeyWidth, height, whites[index]),
                 );
               }),
             if (!pitches[i].key.contains('#') &&
@@ -57,11 +59,7 @@ class OctaveWidget extends StatelessWidget {
                     width: whiteKeyWidth * 2 / 3,
                     height: height * 2 / 3,
                   ),
-                  child: KeyWidget(
-                    width: whiteKeyWidth,
-                    height: height,
-                    pitch: pitches[i - 1],
-                  ),
+                  child: keyBuilder(whiteKeyWidth, height, pitches[i - 1]),
                 );
               })
           ]
