@@ -54,11 +54,11 @@ class MyHomePage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            const Text('32 Keys start with C'),
+            const Text('32 Keys start with C, custom clickable key widget'),
             PianoWidget.keys32c(keyBuilder: buildKey),
             const Divider(),
-            const Text('32 Keys start with F'),
-            PianoWidget.keys32f(),
+            const Text('32 Keys start with F, wrapper by stateful widget'),
+            const MyStatefulWidget(),
             const Divider(),
             const Text('36 Keys start with C'),
             PianoWidget.keys36c(),
@@ -146,6 +146,77 @@ class _MyKeyWidgetState extends State<MyKeyWidget> {
             bottomRight: Radius.circular(2),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  const MyStatefulWidget({Key? key}) : super(key: key);
+
+  @override
+  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  var _pressedNotes = <String>{};
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        PianoWidget.keys32f(
+          keyBuilder: (width, height, pitch) {
+            return Container(
+              width: width,
+              height: height,
+              decoration: BoxDecoration(
+                color: _pressedNotes
+                        .contains('${pitch.key}${pitch.value ~/ 12 + 1}')
+                    ? Colors.red
+                    : (pitch.key.contains('#') ? Colors.black : Colors.white),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(2),
+                  bottomRight: Radius.circular(2),
+                ),
+              ),
+            );
+          },
+        ),
+        Row(
+          children: [
+            _buildButton('B2'),
+            _buildButton('B3'),
+            _buildButton('F#1'),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _buildButton(String note) {
+    return GestureDetector(
+      onTapDown: (_) {
+        _pressedNotes.add(note);
+        setState(() {
+          _pressedNotes = Set.of(_pressedNotes);
+        });
+      },
+      onTapUp: (_) {
+        _pressedNotes.remove(note);
+        setState(() {
+          _pressedNotes = Set.of(_pressedNotes);
+        });
+      },
+      onTapCancel: () {
+        _pressedNotes.remove(note);
+        setState(() {
+          _pressedNotes = Set.of(_pressedNotes);
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(note),
       ),
     );
   }
